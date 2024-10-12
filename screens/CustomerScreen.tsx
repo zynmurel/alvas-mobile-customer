@@ -113,6 +113,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "auto",
     width: "auto",
-    backgroundColor: "gray"
+    backgroundColor: "white"
   },
 });
