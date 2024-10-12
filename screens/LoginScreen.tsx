@@ -70,48 +70,48 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     }
 
     return (
-        <View style={tw`flex-1 justify-center px-4 overflow-scroll relative`}>
-            <View style={tw` absolute top-10 left-0 w-28`}>
+        <View style={tw`relative justify-center flex-1 px-4 overflow-scroll`}>
+            <View style={tw`absolute left-0 top-10 w-28`}>
                 <Image
                     style={{
                         height: 40
                     }}
-                    source={require('../images/logo.png')}
+                    source={require('../assets/images/logo.png')}
                     contentFit="contain"
                     transition={1000}
                 /></View>
             <Text style={tw`text-4xl font-black text-center text-green-700`}>LOGIN</Text>
-            <Text style={tw` text-center mb-6 text-base px-2 text-green-600`}>Log in to the Alvas app for effortless online ordering and delivery.</Text>
+            <Text style={tw`px-2 mb-6 text-base text-center text-green-600 `}>Log in to the Alvas app for effortless online ordering and delivery.</Text>
 
-            <Text style={tw` text-base text-green-700 font-bold`}>Username</Text>
+            <Text style={tw`text-base font-bold text-green-700 `}>Username</Text>
             <TextInput
                 style={tw`border rounded-lg p-4 mb-1 ${errors.username ? 'border-red-500' : ''}`}
-                placeholder="Input password"
+                placeholder="Input username"
                 value={username}
                 onChangeText={setUsername}
                 secureTextEntry={false}
             />
-            {errors.username && <Text style={tw`text-red-500 mb-1`}>{errors.username}</Text>}
+            {errors.username && <Text style={tw`mb-1 text-red-500`}>{errors.username}</Text>}
 
-            <Text style={tw` text-base text-green-700 font-bold mt-2`}>Password</Text>
+            <Text style={tw`mt-2 text-base font-bold text-green-700 `}>Password</Text>
             <View style={tw`relative`}>
                 <TextInput
                     style={tw`border rounded-lg p-4 mb-1 ${errors.password ? 'border-red-500' : ''}`}
                     placeholder="Input password"
                     value={password}
                     onChangeText={setPassword}
-                    secureTextEntry={false}
+                    secureTextEntry={true}
                 />
-                {/* <TouchableOpacity  style={tw`absolute right-4 bottom-5 bg-red-100 z-2`} onPress={()=>navigation.navigate('Register')}>
+                {/* <TouchableOpacity  style={tw`absolute bg-red-100 right-4 bottom-5 z-2`} onPress={()=>navigation.navigate('Register')}>
             <Feather name="eye" size={22} color="gray" />
             </TouchableOpacity> */}
             </View>
-            {errors.password && <Text style={tw`text-red-500 mb-1`}>{errors.password}</Text>}
+            {errors.password && <Text style={tw`mb-1 text-red-500`}>{errors.password}</Text>}
 
-            <View style={tw` bg-emerald-600 rounded-lg mt-5 p-1`}><Button disabled={loading} title={loading ? "Loading..." : "Login"} color={"white"} onPress={handleLogin} /></View>
+            <View style={tw`p-1 mt-5 bg-green-700 rounded-lg`}><Button disabled={loading} title={loading ? "Loading..." : "Login"} color={"white"} onPress={handleLogin} /></View>
 
-            <TouchableOpacity style={tw` flex items-center justify-center text-base p-3`} onPress={() => navigation.navigate('Register')}>
-                <Text style={tw` text-emerald-600`}>Register</Text>
+            <TouchableOpacity style={tw`flex items-center justify-center p-3 text-base `} onPress={() => navigation.navigate('Register')}>
+                <Text style={tw`text-green-700 `}>Register</Text>
             </TouchableOpacity>
         </View>
     );
