@@ -34,15 +34,6 @@ export default function RegisterScreen({ navigation }: any) {
     const newErrors: { [key: string]: string } = {};
     let valid = true;
 
-    if(form["username"].length < 8 ){
-      newErrors["username"] = 'Username must be longer than 8 characters'
-    }
-    if(form["password"].length < 8 ){
-      newErrors["password"] = 'Password must be longer than 8 characters'
-    }
-    if (form["password"] !== form["confirmPassword"]) {
-      newErrors["confirmPassword"] = 'Password does not match'
-    }
     Object.keys(form).forEach((key) => {
       if (!form[key as keyof typeof form]) {
         newErrors[key] = `Required`;
@@ -50,6 +41,18 @@ export default function RegisterScreen({ navigation }: any) {
       }
     });
 
+    if (form["username"].length < 8) {
+      newErrors["username"] = 'Username must be longer than 8 characters'
+      valid = false;
+    }
+    if (form["password"].length < 8) {
+      newErrors["password"] = 'Password must be longer than 8 characters'
+      valid = false;
+    }
+    if (form["password"] !== form["confirmPassword"]) {
+      newErrors["confirmPassword"] = 'Password does not match'
+      valid = false;
+    }
     setErrors(newErrors);
     return valid;
   };
@@ -57,6 +60,7 @@ export default function RegisterScreen({ navigation }: any) {
   const handleRegister = async () => {
     if (validateForm()) {
       try {
+        console.log("you here?")
         setLoading(true)
         const data: any = await axios.post(baseUrl + '/api/mobile/customer/register', {
           username: form.username,
@@ -68,6 +72,7 @@ export default function RegisterScreen({ navigation }: any) {
           place_description: form.place_description,
           contact_number: form.contact_number,
         })
+        console.log(data)
         if (data.data.error) {
           if (data.data.error === "username") {
             setErrors({ "username": "Username is already used." });
@@ -80,11 +85,12 @@ export default function RegisterScreen({ navigation }: any) {
             setUser(data.data.user)
           })
         }
-      } catch (e) {
-        console.log(e)
-      }finally {
         setLoading(false)
-    }
+      } catch (e) {
+        setLoading(false)
+      } finally {
+        setLoading(false)
+      }
     }
   };
 
@@ -209,8 +215,9 @@ export default function RegisterScreen({ navigation }: any) {
 
       </View>
 
-
-      <View style={tw`p-1 mt-5 bg-green-700 rounded-lg`}><Button disabled={loading} title={loading ? "Loading..." : "Register"} color={"white"} onPress={handleRegister} /></View>
+      <TouchableOpacity onPress={handleRegister} disabled={loading} style={tw`flex items-center justify-center p-3 mt-5 bg-green-700 rounded-lg `}>
+        <Text style={tw`text-lg font-bold text-white`}>{loading ? "Loading..." : "Register"}</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={tw`flex items-center justify-center p-3 text-base `} onPress={() => navigation.navigate('Login')}>
         <Text style={tw`text-green-700 `}>Login</Text>
       </TouchableOpacity>

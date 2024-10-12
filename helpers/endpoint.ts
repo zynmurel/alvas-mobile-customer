@@ -1,1 +1,1 @@
-export const baseUrl = "http://10.0.0.22:3000"
+export const baseUrl = "https://alvas-web.vercel.app"

@@ -70,7 +70,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     }
 
     return (
-        <View style={tw`relative justify-center flex-1 px-4 overflow-scroll`}>
+        <View style={tw`relative justify-center px-4 overflow-scroll`}>
             <View style={tw`absolute left-0 top-10 w-28`}>
                 <Image
                     style={{
@@ -80,7 +80,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
                     contentFit="contain"
                     transition={1000}
                 /></View>
-            <Text style={tw`text-4xl font-black text-center text-green-700`}>LOGIN</Text>
+            <Text style={tw`mt-32 text-4xl font-black text-center text-green-700`}>LOGIN</Text>
             <Text style={tw`px-2 mb-6 text-base text-center text-green-600 `}>Log in to the Alvas app for effortless online ordering and delivery.</Text>
 
             <Text style={tw`text-base font-bold text-green-700 `}>Username</Text>
@@ -108,8 +108,9 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
             </View>
             {errors.password && <Text style={tw`mb-1 text-red-500`}>{errors.password}</Text>}
 
-            <View style={tw`p-1 mt-5 bg-green-700 rounded-lg`}><Button disabled={loading} title={loading ? "Loading..." : "Login"} color={"white"} onPress={handleLogin} /></View>
-
+            <TouchableOpacity onPress={handleLogin}  disabled={loading}  style={tw`flex items-center justify-center p-3 mt-5 bg-green-700 rounded-lg `}>
+                <Text style={tw`text-lg font-bold text-white`}>{loading ? "Loading..." : "Login"} </Text>
+            </TouchableOpacity>
             <TouchableOpacity style={tw`flex items-center justify-center p-3 text-base `} onPress={() => navigation.navigate('Register')}>
                 <Text style={tw`text-green-700 `}>Register</Text>
             </TouchableOpacity>
