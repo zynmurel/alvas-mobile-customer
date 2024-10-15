@@ -97,7 +97,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 
             <Text style={tw`mt-2 text-base font-bold text-green-700 `}>Password</Text>
             <View style={tw`relative`}>
-                <View style={tw`border rounded-lg flex-row items-center p-4 mb-1 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}>
+                <View style={tw`border rounded-lg flex-row items-center p-4 mb-1 ${errors.password ? 'border-red-500' : ''}`}>
                     <TextInput
                         style={tw`flex-1`}
                         placeholder="Input password"
