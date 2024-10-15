@@ -109,7 +109,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
                         onPress={() => setIsPasswordVisible(!isPasswordVisible)}
                         style={tw`pl-3`}
                     >
-                        <Text>{isPasswordVisible ? <Feather name="eye" size={18} /> : <Feather name="eye-off" size={18} />}</Text>
+                        <Text><Feather name={isPasswordVisible?"eye-off":"eye"} size={18} /></Text>
                     </TouchableOpacity>
                 </View>
                 {/* <TouchableOpacity  style={tw`absolute bg-red-100 right-4 bottom-5 z-2`} onPress={()=>navigation.navigate('Register')}>
