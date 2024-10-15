@@ -8,6 +8,7 @@ import tw from 'twrnc';
 import { baseUrl } from '../helpers/endpoint';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useUserStore } from '../helpers/zustand/user';
+import { Feather } from '@expo/vector-icons';
 
 export default function RegisterScreen({ navigation }: any) {
   const { setUser } = useUserStore()
@@ -22,6 +23,9 @@ export default function RegisterScreen({ navigation }: any) {
     place_description: '',
     contact_number: ''
   });
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(false)
 
@@ -192,25 +196,40 @@ export default function RegisterScreen({ navigation }: any) {
         />
         {errors.username && <Text style={tw`mb-1 -mt-2 text-xs text-red-500`}>{errors.username}</Text>}
 
-
         <Text style={tw`text-sm font-bold text-green-700 `}>Password</Text>
-        <TextInput
-          style={tw`border rounded-lg p-3 mb-2 ${errors.password ? 'border-red-500' : ''}`}
-          placeholder="Input password"
-          value={form.password}
-          onChangeText={(value) => handleChange('password', value)}
-          secureTextEntry={true}
-        />
+        <View style={tw`border rounded-lg flex-row items-center p-3 mb-1 ${errors.password ? 'border-red-500' : ''}`}>
+          <TextInput
+            style={tw`flex-1`}
+            placeholder="Input password"
+            value={form.password}
+            onChangeText={(value) => handleChange('password', value)}
+            secureTextEntry={!isPasswordVisible}
+          />
+          <TouchableOpacity
+            onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+            style={tw`pl-3`}
+          >
+            <Text>{isPasswordVisible ? <Feather name="eye" size={18} /> : <Feather name="eye-off" size={18} />}</Text>
+          </TouchableOpacity>
+        </View>
         {errors.password && <Text style={tw`mb-1 -mt-2 text-xs text-red-500`}>{errors.password}</Text>}
 
         <Text style={tw`text-sm font-bold text-green-700 `}>Confirm Password</Text>
-        <TextInput
-          style={tw`border rounded-lg p-3 mb-2 ${errors.confirmPassword ? 'border-red-500' : ''}`}
-          placeholder="Input confirmPassword"
-          value={form.confirmPassword}
-          onChangeText={(value) => handleChange('confirmPassword', value)}
-          secureTextEntry={true}
-        />
+        <View style={tw`border rounded-lg flex-row items-center p-3 mb-1 ${errors.confirmPassword ? 'border-red-500' : ''}`}>
+          <TextInput
+            style={tw`flex-1`}
+            placeholder="Input password"
+            value={form.confirmPassword}
+            onChangeText={(value) => handleChange('confirmPassword', value)}
+            secureTextEntry={!isConfirmPasswordVisible}
+          />
+          <TouchableOpacity
+            onPress={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
+            style={tw`pl-3`}
+          >
+            <Text>{isConfirmPasswordVisible ? <Feather name="eye" size={18} /> : <Feather name="eye-off" size={18} />}</Text>
+          </TouchableOpacity>
+        </View>
         {errors.confirmPassword && <Text style={tw`mb-1 -mt-2 text-xs text-red-500`}>{errors.confirmPassword}</Text>}
 
       </View>

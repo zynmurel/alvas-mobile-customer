@@ -20,6 +20,8 @@ type LoginScreenProps = {
 export default function LoginScreen({ navigation }: LoginScreenProps) {
     const { setUser } = useUserStore();
     const [username, setUsername] = useState('');
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
@@ -56,7 +58,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
                         setErrors({ password: "Wrong password" })
                     }
                 } else {
-                    await AsyncStorage.setItem('user', JSON.stringify(data.data.user)).then(()=>{
+                    await AsyncStorage.setItem('user', JSON.stringify(data.data.user)).then(() => {
                         setUser(data.data.user)
                     })
                 }
@@ -95,20 +97,28 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 
             <Text style={tw`mt-2 text-base font-bold text-green-700 `}>Password</Text>
             <View style={tw`relative`}>
-                <TextInput
-                    style={tw`border rounded-lg p-4 mb-1 ${errors.password ? 'border-red-500' : ''}`}
-                    placeholder="Input password"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry={true}
-                />
+                <View style={tw`border rounded-lg flex-row items-center p-4 mb-1 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}>
+                    <TextInput
+                        style={tw`flex-1`}
+                        placeholder="Input password"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on state
+                    />
+                    <TouchableOpacity
+                        onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                        style={tw`pl-3`}
+                    >
+                        <Text>{isPasswordVisible ? <Feather name="eye" size={18} /> : <Feather name="eye-off" size={18} />}</Text>
+                    </TouchableOpacity>
+                </View>
                 {/* <TouchableOpacity  style={tw`absolute bg-red-100 right-4 bottom-5 z-2`} onPress={()=>navigation.navigate('Register')}>
             <Feather name="eye" size={22} color="gray" />
             </TouchableOpacity> */}
             </View>
             {errors.password && <Text style={tw`mb-1 text-red-500`}>{errors.password}</Text>}
 
-            <TouchableOpacity onPress={handleLogin}  disabled={loading}  style={tw`flex items-center justify-center p-3 mt-5 bg-green-700 rounded-lg `}>
+            <TouchableOpacity onPress={handleLogin} disabled={loading} style={tw`flex items-center justify-center p-3 mt-5 bg-green-700 rounded-lg `}>
                 <Text style={tw`text-lg font-bold text-white`}>{loading ? "Loading..." : "Login"} </Text>
             </TouchableOpacity>
             <TouchableOpacity style={tw`flex items-center justify-center p-3 text-base `} onPress={() => navigation.navigate('Register')}>
